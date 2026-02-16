@@ -20,13 +20,27 @@ exports.getAllProducts = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
-
+    const search = req.query.search || "";
+    let status = req.query.status || "";
     const skip = (page - 1) * limit;
+    const query = {};
 
-    const totalProducts = await productModel.countDocuments();
+    if (search) {
+      query.$or = [
+        { title: { $regex: search, $options: "i" } },
+        { handle: { $regex: search, $options: "i" } },
+        { tags: { $regex: search, $options: "i" } },
+        { "variants.sku": { $regex: search, $options: "i" } },
+      ];
+    }
+    if (status && status !== "all") {
+      query.status = status.toUpperCase();
+    }
+
+    const totalProducts = await productModel.countDocuments(query);
 
     const products = await productModel
-      .find({})
+      .find(query)
       .skip(skip)
       .limit(limit)
       .sort({ createdAt: -1 });
@@ -45,10 +59,10 @@ exports.getAllProducts = async (req, res) => {
     });
   }
 };
+
 exports.createProduct = async (req, res) => {
   try {
     const { title, body_html, vendor, product_type } = req.body;
-
     const shop = envVariables.shopify.shopDomain;
     const accessToken = envVariables.shopify.shopifyAccessToken;
 
@@ -86,7 +100,7 @@ exports.createProduct = async (req, res) => {
 };
 exports.updateProduct = async (req, res) => {
   try {
-    const { title, body_html } = req.body;
+    const { title, body_html, vendor, product_type } = req.body;
 
     const shop = envVariables.shopify.shopDomain;
     const accessToken = envVariables.shopify.shopifyAccessToken;
@@ -100,6 +114,8 @@ exports.updateProduct = async (req, res) => {
           id: numericId,
           title,
           body_html,
+          vendor,
+          product_type,
         },
       },
       {

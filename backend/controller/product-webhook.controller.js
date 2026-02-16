@@ -8,6 +8,8 @@ exports.createProductWebhook = async (req, res) => {
         shopifyProductId: "gid://shopify/Product/" + product.id,
         title: product.title,
         handle: product.handle,
+        vendor: product.vendor,
+        productType: product.product_type,
         descriptionHtml: product.body_html,
         tags: product.tags ? product.tags.split(",") : [],
         images: product.images?.map((img) => ({
@@ -64,6 +66,8 @@ exports.updateProductWebhook = async (req, res) => {
       {
         title: product.title,
         descriptionHtml: product.body_html,
+        vendor: product.vendor,
+        productType: product.product_type,
         tags: product.tags ? product.tags.split(",").map((t) => t.trim()) : [],
       },
       { upsert: true, new: true },

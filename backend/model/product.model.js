@@ -49,13 +49,16 @@ const productSchema = new mongoose.Schema(
     },
 
     handle: String,
-
+    vendor: String,
+    productType: String,
     descriptionHtml: String,
-
+    status: {
+      type: String,
+      default: "all",
+    },
     tags: [String],
 
     images: [imageSchema],
-
     variants: [variantSchema],
 
     metafields: [metafieldSchema],

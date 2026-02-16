@@ -28,6 +28,9 @@ const getShopifyProducts = async () => {
                 id
                 title
                 handle
+                status
+                vendor
+                productType
                 descriptionHtml
                 tags
                 images(first: 5) {
@@ -78,8 +81,6 @@ const getShopifyProducts = async () => {
 
     for (let i = 0; i < products.length; i++) {
       const product = products[i];
-
-      // ✅ Extract Images
       const images = [];
       if (product.images && product.images.edges.length > 0) {
         for (let j = 0; j < product.images.edges.length; j++) {
@@ -90,7 +91,6 @@ const getShopifyProducts = async () => {
         }
       }
 
-      // ✅ Extract Variants
       const variants = [];
       if (product.variants && product.variants.edges.length > 0) {
         for (let j = 0; j < product.variants.edges.length; j++) {
@@ -98,6 +98,7 @@ const getShopifyProducts = async () => {
           variants.push({
             shopifyVariantId: v.id,
             title: v.title,
+            status: v.status,
             price: parseFloat(v.price),
             sku: v.sku,
             availableForSale: v.availableForSale,
@@ -128,6 +129,9 @@ const getShopifyProducts = async () => {
         title: product.title,
         handle: product.handle,
         descriptionHtml: product.descriptionHtml,
+        status: product.status,
+        productType: product.productType,
+        vendor: product.vendor,
         tags: tags,
         images: images,
         variants: variants,

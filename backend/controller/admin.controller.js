@@ -50,7 +50,12 @@ exports.signIn = async (req, res) => {
       { _id: admin._id },
       envVariables.adminTokenSecretKey,
     );
-    const options = { httpOnly: true, maxAge: 1000 * 60 * 60 * 20 }; // 20 minutes
+    const options = {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 20,
+      // sameSite: "none",
+      // secure: false,
+    }; // 20 minutes
     res.cookie("adminToken", token, options);
     return res.json({
       success: true,
