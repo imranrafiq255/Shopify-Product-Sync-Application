@@ -256,8 +256,146 @@ LOCAL API TEST URLs:
    Method: GET
    Description: Fetch all the products from shopify store and saved it into local database
 
-## FRONTEND
+# FRONTEND
 
-TODO
+Frontend application for managing products (Create, Update, Delete, Search, Filter, Pagination).
+
+Built with React, Redux Toolkit, Formik, and Tailwind CSS.
+
+## Tech Stack
+
+React
+
+Redux Toolkit
+
+React Router
+
+Formik
+
+Yup
+
+Axios
+
+Tailwind CSS
+
+## Features
+
+Authentication
+
+Admin login
+
+Protected routes
+
+Persistent authentication check
+
+Logout functionality
+
+Product Management
+
+Fetch products with pagination
+
+Search products
+
+Filter by status (all, active, draft)
+
+Create new product
+
+Update existing product
+
+Delete product
+
+Optimistic UI updates (no unnecessary refetch)
+
+UI
+
+Modal-based product form
+
+Confirmation modal for delete
+
+Loading states
+
+Error handling
+
+Responsive layout
+
+## Project Structure
+
+src/
+│
+├── app/
+│ ├── store.js
+│ └── hooks.js
+│
+├── features/
+│ ├── auth/
+│ │ ├── authSlice.js
+│ │ ├── authSelector.js
+│ │ ├── loginApi.js
+│ │ ├── loadCurrentAdminApi.js
+│ │ └── components/
+│ │
+│ └── dashboard/
+│ ├── dashboardSlice.js
+│ ├── dashboardSelector.js
+│ ├── dashboardApi.js
+│ ├── pages/
+│ └── components/
+│
+├── routes/
+│ └── ProtectedRoute.jsx
+│
+└── AppRoutes.jsx
+
+## State Management
+
+Redux Toolkit is used for:
+
+Auth Slice
+
+Handles:
+
+login
+
+load current admin
+
+logout
+
+auth loading states
+
+auth errors
+
+Dashboard Slice
+
+Handles:
+
+fetch products
+
+create product
+
+update product
+
+delete product
+
+pagination
+
+search
+
+filtering
+
+State is updated directly on create/update/delete to avoid unnecessary API refetching.
+
+## Environment Setup
+
+Create a .env file in root:
+
+VITE_API_BASE_URL=http://localhost:5000/api
+
+## Adjust according to your backend URL.
+
+Installation
+npm install
+
+Run Development Server
+npm run dev
 
 GOOD LUCK 🙂
